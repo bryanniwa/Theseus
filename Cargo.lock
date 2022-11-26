@@ -504,6 +504,44 @@ version = "0.1.0"
 source = "git+https://github.com/rust-lang/stdsimd#0711e11593e7d3ce7cffdb7bd966553e4a4f858f"
 
 [[package]]
+name = "count"
+version = "0.1.0"
+dependencies = [
+ "hpet",
+ "smoltcp_helper",
+ "terminal_print",
+]
+
+[[package]]
+name = "count_multitask"
+version = "0.1.0"
+dependencies = [
+ "app_io",
+ "core2",
+ "hpet",
+ "log",
+ "logger",
+ "smoltcp_helper",
+ "spawn",
+ "stdio",
+ "task",
+ "terminal_print",
+]
+
+[[package]]
+name = "count_multitask_v2"
+version = "0.1.0"
+dependencies = [
+ "hpet",
+ "log",
+ "logger",
+ "smoltcp_helper",
+ "spawn",
+ "task",
+ "terminal_print",
+]
+
+[[package]]
 name = "cow_arc"
 version = "0.1.0"
 dependencies = [

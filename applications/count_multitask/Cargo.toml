@@ -1,0 +1,27 @@
+[package]
+name = "count_multitask_v2"
+version = "0.1.0"
+
+[dependencies.log]
+version = "0.4.8"
+
+[dependencies.logger]
+path = "../../kernel/logger"
+
+[dependencies.spawn]
+path = "../../kernel/spawn"
+
+[dependencies.task]
+path = "../../kernel/task" 
+
+# ----------------------- #
+# shared:
+
+[dependencies.terminal_print]
+path = "../../kernel/terminal_print"
+
+[dependencies.hpet]
+path = "../../kernel/acpi/hpet"
+
+[dependencies.smoltcp_helper]
+path = "../../kernel/smoltcp_helper"
