@@ -1,0 +1,8 @@
+[package]
+authors = ["Bryan Niwa <thebryanniwa@gmail.com>"]
+name = "task_async"
+description = "Basic task type for async functions"
+version = "0.1.0"
+
+[lib]
+crate-type = ["rlib"]

@@ -1,0 +1,22 @@
+[package]
+name = "test_execution"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies.terminal_print]
+path = "../../kernel/terminal_print"
+
+[dependencies.hpet]
+path = "../../kernel/acpi/hpet"
+
+[dependencies.smoltcp_helper]
+path = "../../kernel/smoltcp_helper"
+
+[dependencies.sleep]
+path = "../../kernel/sleep"
+
+[dependencies.task_async]
+path = "../../kernel/task_async"
+
+[dependencies.simple_executor]
+path = "../../kernel/simple_executor"

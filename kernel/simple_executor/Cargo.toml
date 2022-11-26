@@ -1,0 +1,11 @@
+[package]
+authors = ["Bryan Niwa <thebryanniwa@gmail.com>"]
+name = "simple_executor"
+description = "A simple executor for async tasks"
+version = "0.1.0"
+
+[dependencies.task_async]
+path = "../task_async"
+
+[lib]
+crate-type = ["rlib"]
