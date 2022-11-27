@@ -1,0 +1,23 @@
+[package]
+name = "timer_future"
+description = "A future lib to run asynchronous timers"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+spin = "0.9.0"
+
+[dependencies.sleep]
+path = "../sleep"
+
+[dependencies.spawn]
+path = "../spawn"
+
+[dependencies.task]
+path = "../task"
+
+[dependencies.terminal_print]
+path = "../terminal_print"
+
+[lib]
+crate-type = ["rlib"]
