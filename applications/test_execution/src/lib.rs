@@ -11,22 +11,23 @@ use task_async::TaskAsync;
 
 pub fn main(_args: Vec<String>) -> isize {
     let mut executor = SimpleExecutor::new();
-    executor.spawn(TaskAsync::new(example_task()));
-    executor.run();
+    executor.spawn(TaskAsync::new(example_task(1, 1000)));
+    println!("test message");
+    executor.spawn(TaskAsync::new(example_task(2, 500)));
 
-    println!("after run");
+    executor.run();
 
     0
 }
 
-async fn async_number() -> u32 {
-    if let Err(e) = sleep::sleep(1000) {
+async fn async_number(sleep_time: usize, task_num: u8) -> u8 {
+    if let Err(e) = sleep::sleep(sleep_time) {
         println!("Error: {:?}", e);
     }
-    42
+    task_num
 }
 
-async fn example_task() {
-    let number = async_number().await;
-    println!("async number: {}", number);
+async fn example_task(task_num: u8, sleep_time: usize) {
+    let number = async_number(sleep_time, task_num);
+    println!("Task {}: async number: {}", task_num, number.await);
 }
