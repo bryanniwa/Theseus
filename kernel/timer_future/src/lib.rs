@@ -41,6 +41,7 @@ struct TimerArgs {
 
 fn timer(args: TimerArgs) {
     if let Err(e) = sleep::sleep(args.duration) {
+        // This won't actually print since timer is invoked as a child task
         println!("Error sleeping: {:?}", e);
     }
     let mut shared_state = args.shared_state.lock();
@@ -62,7 +63,9 @@ impl TimerFuture {
             shared_state: shared_state.clone(),
         };
 
-        spawn::new_task_builder(timer, args);
+        if spawn::new_task_builder(timer, args).spawn().is_err() {
+            println!("failed to start task");
+        }
 
         TimerFuture { shared_state }
     }
