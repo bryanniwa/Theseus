@@ -3376,6 +3376,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "test_multitask"
+version = "0.1.0"
+dependencies = [
+ "hpet",
+ "simple_executor",
+ "sleep",
+ "smoltcp_helper",
+ "task_async",
+ "terminal_print",
+ "timer_future",
+]
+
+[[package]]
 name = "test_mutex_sleep"
 version = "0.1.0"
 dependencies = [
