@@ -18,6 +18,7 @@ impl SimpleExecutor {
         }
     }
 
+    // push the corresponding async task in the queue when spawned
     pub fn spawn(&mut self, task: TaskAsync) {
         self.task_queue.push_back(task)
     }
@@ -35,6 +36,7 @@ impl SimpleExecutor {
     }
 }
 
+// waker implementation
 fn dummy_waker() -> Waker {
     unsafe { Waker::from_raw(dummy_raw_waker()) }
 }
