@@ -4,6 +4,9 @@ name = "simple_executor"
 description = "A simple executor for async tasks"
 version = "0.1.0"
 
+[dependencies]
+crossbeam = "0.8"
+
 [dependencies.task_async]
 path = "../task_async"
 
