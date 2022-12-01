@@ -1,13 +1,14 @@
 #![no_std]
 
 extern crate alloc;
+extern crate crossbeam_queue;
 extern crate task_async;
-extern crate crossbeam;
+extern crate x86_64;
 
 use alloc::{collections::BTreeMap, sync::Arc, task::Wake};
-use core::task::{Context, Poll, RawWaker, RawWakerVTable, Waker};
-use task_async::{TaskId, TaskAsync};
-use crossbeam::queue::ArrayQueue;
+use core::task::{Context, Poll, Waker};
+use crossbeam_queue::ArrayQueue;
+use task_async::{TaskAsync, TaskId};
 
 pub struct SimpleExecutor {
     // tasks are accessed by TaskId in the map
@@ -40,6 +41,7 @@ impl SimpleExecutor {
     pub fn run(&mut self) -> ! {
         loop {
             self.run_ready_tasks();
+            self.sleep_if_idle();
         }
     }
 
@@ -69,6 +71,17 @@ impl SimpleExecutor {
                 }
                 Poll::Pending => {}
             }
+        }
+    }
+
+    fn sleep_if_idle(&self) {
+        use x86_64::instructions::interrupts::{self, enable_and_hlt};
+
+        interrupts::disable();
+        if self.task_queue.is_empty() {
+            enable_and_hlt();
+        } else {
+            interrupts::enable();
         }
     }
 }
