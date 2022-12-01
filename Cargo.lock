@@ -3664,6 +3664,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "touch"
+version = "0.1.0"
+dependencies = [
+ "getopts",
+ "memfs",
+ "task",
+ "terminal_print",
+]
+
+[[package]]
 name = "tsc"
 version = "0.1.0"
 dependencies = [

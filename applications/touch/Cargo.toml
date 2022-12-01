@@ -12,11 +12,5 @@ path = "../../kernel/terminal_print"
 [dependencies.task]
 path = "../../kernel/task"
 
-[dependencies.fs_node]
-path = "../../kernel/fs_node"
-
-[dependencies.vfs_node]
-path = "../../kernel/vfs_node"
-
 [dependencies.memfs]
 path = "../../kernel/memfs"
