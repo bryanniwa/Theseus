@@ -6,6 +6,8 @@ extern crate task;
 
 #[macro_use] extern crate terminal_print;
 extern crate alloc;
+#[macro_use] extern crate log;
+extern crate logger;
 
 use alloc::string::String;
 use alloc::string::ToString;
@@ -19,6 +21,8 @@ use alloc::boxed::Box;
 use sha3::digest::generic_array::GenericArray;
 use sha3::{Digest, Sha3_256};
 use digest::consts::U32;
+
+use log::Level;
 
 // NOTE: 
 // this implementation is based on a CMPT383 assignment by Andres Miltner & Greg Baker (though this is significantly different)
@@ -34,7 +38,7 @@ struct Block {
 }
 
 impl Block {
-    const difficulty_bits: u8 = 24;
+    const difficulty_bits: u8 = 8;
 
     pub fn first_block() -> Block {
         Self {
@@ -162,6 +166,7 @@ impl Block {
 
 // NOTE: this is the preemptive version
 pub fn main(_args: Vec<String>) -> isize {
+    logger::set_log_level(Level::Error);
     
     let mut block_1 = Block::first_block();
     let _success_1 = block_1.mine(4);

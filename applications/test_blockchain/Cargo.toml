@@ -40,4 +40,8 @@ version = "~0.9"
 default-features = false
 features = ["alloc"]
 
+[dependencies.log]
+version = "0.4.8"
 
+[dependencies.logger]
+path = "../../kernel/logger"

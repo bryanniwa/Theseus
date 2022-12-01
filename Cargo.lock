@@ -3330,6 +3330,8 @@ name = "test_blockchain"
 version = "0.1.0"
 dependencies = [
  "digest 0.9.0",
+ "log",
+ "logger",
  "sha3 0.9.1",
  "simple_executor",
  "spawn",
