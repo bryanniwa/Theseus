@@ -11,7 +11,7 @@ use core::{
 };
 
 pub struct TaskAsync {
-    id: TaskId,
+    pub id: TaskId,
     future: Pin<Box<dyn Future<Output = ()>>>,
 }
 
@@ -31,7 +31,7 @@ impl TaskAsync {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-struct TaskId(u64);
+pub struct TaskId(u64);
 
 impl TaskId {
     fn new() -> Self {
