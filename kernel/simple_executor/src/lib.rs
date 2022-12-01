@@ -1,5 +1,7 @@
 #![no_std]
 
+#[macro_use]
+extern crate terminal_print;
 extern crate alloc;
 extern crate crossbeam_queue;
 extern crate task_async;
@@ -56,9 +58,13 @@ impl SimpleExecutor {
         // loop over all tasks in the task queue
         while let Some(task_id) = task_queue.pop() {
             let task = match tasks.get_mut(&task_id) {
-                Some(task) => task,
+                Some(task) => {
+                    println!("Task ID: {:?}", task_id);
+                    task
+                },
                 None => continue, // task doesn't exist anymore
             };
+
             let waker = waker_cache
                 .entry(task_id)
                 .or_insert_with(|| TaskWaker::new(task_id, task_queue.clone()));
