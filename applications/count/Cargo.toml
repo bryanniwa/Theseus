@@ -1,0 +1,18 @@
+[package]
+name = "count"
+version = "0.1.0"
+
+[dependencies]
+log = "0.4.8"
+
+[dependencies.logger]
+path = "../../kernel/logger"
+
+[dependencies.terminal_print]
+path = "../../kernel/terminal_print"
+
+[dependencies.hpet]
+path = "../../kernel/acpi/hpet"
+
+[dependencies.smoltcp_helper]
+path = "../../kernel/smoltcp_helper"

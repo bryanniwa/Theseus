@@ -1,0 +1,45 @@
+[package]
+name = "count_async"
+version = "0.1.0"
+edition = "2021"
+
+# enable child task printing to terminal
+[dependencies]
+core2 = { version = "0.4.0", default-features = false, features = ["alloc", "nightly"] }
+spin = "0.9.0"
+log = "0.4.8"
+
+[dependencies.stdio]
+path = "../../libs/stdio"
+[dependencies.app_io]
+path = "../../kernel/app_io"
+
+[dependencies.logger]
+path = "../../kernel/logger"
+
+#[dependencies.spawn]
+#path = "../../kernel/spawn"
+
+#[dependencies.task]
+#path = "../../kernel/task" 
+
+[dependencies.task_async]
+path = "../../kernel/task_async"
+
+#[dependencies.timer_future]
+#path = "../../kernel/timer_future"
+
+[dependencies.simple_executor]
+path = "../../kernel/simple_executor"
+
+# ----------------------- #
+# shared:
+
+[dependencies.terminal_print]
+path = "../../kernel/terminal_print"
+
+[dependencies.hpet]
+path = "../../kernel/acpi/hpet"
+
+[dependencies.smoltcp_helper]
+path = "../../kernel/smoltcp_helper"

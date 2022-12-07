@@ -7,10 +7,14 @@ extern crate crossbeam_queue;
 extern crate task_async;
 extern crate x86_64;
 
-use alloc::{collections::BTreeMap, sync::Arc, task::Wake};
+use alloc::{collections::BTreeMap, sync::Arc, task::Wake, vec::Vec};
 use core::task::{Context, Poll, Waker};
+use core::{future::Future, pin::Pin};
 use crossbeam_queue::ArrayQueue;
 use task_async::{TaskAsync, TaskId};
+use spin::Mutex;
+
+use task::JoinableTaskRef;
 
 pub struct WakerExecutor {
     // tasks are accessed by TaskId in the map
@@ -123,3 +127,122 @@ impl Wake for TaskWaker {
         self.wake_task();
     }
 }
+
+// --------------------------
+// join all implementation attempt:
+
+/*
+// TODO: make this function accept any iterator
+fn join_all(futures: Vec<dyn Future<Output = ()> + Send>) -> JoinAll
+{
+    JoinAll::new(futures)
+}
+
+struct JoinAll {
+    futures: Option<Vec<dyn Future<Output = ()> + Send>>,
+    taskref_list: Vec<JoinableTaskRef>,
+    shared_state: Arc<Mutex<JoinAllSharedState>>,
+}
+
+struct JoinAllSharedState {
+    pub num_left: u32, // the number of futures not yet done
+    pub waker: Option<Waker>,
+}
+
+struct JoinAllBodyArgs {
+    pub future: dyn Future<Output = ()> + Send,
+    pub shared_state: Arc<Mutex<JoinAllSharedState>>,
+}
+
+impl JoinAll {
+    fn new(futures: Vec<dyn Future<Output = ()> + Send>) -> JoinAll {
+        let len = futures.len() as u32;
+        JoinAll { 
+            futures: Some(futures),
+            taskref_list: Vec::new(),
+            shared_state: Arc::new(Mutex::new(
+                JoinAllSharedState {
+                    num_left: len,
+                    waker: None,
+                }
+            )),
+        }
+    }
+
+    // this should usually be run on a new theseus task
+    fn body(args: JoinAllBodyArgs) -> u32 {
+        let mut executor = WakerExecutor::new();
+        executor.spawn(
+            TaskAsync::new(args.future)
+        );
+        if let Err(_err) = executor.run() {
+            println!("The Executor raised an error!");
+            return 1;
+        }
+
+        // we're done! check if we should wake the executor
+        let mut num_left: u32 = 0;
+        {
+            let mut shared_state = args.shared_state.lock();
+            shared_state.num_left -= 1;
+            num_left = shared_state.num_left;
+        }
+
+        // only wake if this is the last task
+        if num_left == 0 {
+            let mut shared_state = args.shared_state.lock();
+            if let Some(thewaker) = &shared_state.waker {
+                thewaker.wake_by_ref();
+            }
+            // TODO: add an error in the else condition
+        }
+
+        0 // for success
+    } 
+}
+
+// now join_all can be awaited
+impl Future for JoinAll {
+    type Output = (); // TODO: support return values
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
+        match &self.futures {
+            Some(futures) => {
+                // do initial poll for all futures & give them their own threads
+                for f in futures {
+                    match spawn::new_task_builder(Self::body, 
+                        JoinAllBodyArgs { 
+                            future: f,
+                            shared_state: self.shared_state.clone(),
+                        }
+                    ).spawn() {
+                        Ok(taskref) => self.taskref_list.push(taskref),
+                        Err(_err) => println!("failed to start task!"),
+                    };
+                }
+                self.futures = None;
+                self.shared_state.lock().waker = Some(cx.waker().clone());
+
+                Poll::Pending
+            },
+            None => {
+                // check if all children tasks are done
+                let mut num_left = 0;
+                { num_left = self.shared_state.lock().num_left; }
+                if num_left == 0 {
+                    // clean up threads
+                    for taskref in &self.taskref_list {
+                        let _ = taskref.join();
+                    }
+
+                    Poll::Ready(())
+                } else {
+                    // NOTE: this is probably unreachable
+                    self.shared_state.lock().waker = Some(cx.waker().clone());
+
+                    Poll::Pending 
+                }
+            },
+        }
+    }
+}
+*/

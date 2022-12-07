@@ -12,14 +12,14 @@ use core::{
 
 pub struct TaskAsync {
     pub id: TaskId,
-    future: Pin<Box<dyn Future<Output = ()>>>,
+    pub future: Pin<Box<dyn Future<Output = ()>>>,
 }
 
 impl TaskAsync {
     pub fn new(future: impl Future<Output = ()> + 'static) -> TaskAsync {
         TaskAsync {
             id: TaskId::new(),
-            future:Box::pin(future),
+            future: Box::pin(future),
         }
     }
 
