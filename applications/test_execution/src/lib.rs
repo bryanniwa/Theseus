@@ -10,11 +10,17 @@ use simple_executor::SimpleExecutor;
 use task_async::TaskAsync;
 
 pub fn main(_args: Vec<String>) -> isize {
+    // create simple executor
     let mut executor = SimpleExecutor::new();
-    executor.spawn(TaskAsync::new(example_task(1, 1000)));
-    println!("test message");
-    executor.spawn(TaskAsync::new(example_task(2, 500)));
 
+    let task1 = TaskAsync::new(example_task(1, 1000));
+    let task2 = TaskAsync::new(example_task(2, 500));
+    
+    // spawn tasks
+    executor.spawn(task1);
+    executor.spawn(task2);
+
+    println!("Ready to run executor");
     executor.run();
 
     0
