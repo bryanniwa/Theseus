@@ -1,13 +1,12 @@
 #![no_std]
 
-// NOTE: running this cell triggers a Theseus OS bug that has not yet been fixed. Run at your own risk. 
-
 extern crate spawn;
 extern crate task;
 //extern crate task_async;
 
 #[macro_use] extern crate terminal_print;
 extern crate alloc;
+
 #[macro_use] extern crate log;
 extern crate logger;
 
@@ -15,16 +14,15 @@ use alloc::string::String;
 use alloc::string::ToString;
 use alloc::vec::Vec;
 use alloc::sync::Arc;
-use alloc::boxed::Box;
 
 //use simple_executor::SimpleExecutor;
 //use task_async::TaskAsync;
 
+use log::Level;
+
 use sha3::digest::generic_array::GenericArray;
 use sha3::{Digest, Sha3_256};
 use digest::consts::U32;
-
-use log::Level;
 
 // NOTE: 
 // this implementation is based on a CMPT383 assignment by Andres Miltner & Greg Baker (though this is significantly different)
@@ -110,6 +108,7 @@ impl Block {
 
         let block_ref = Arc::new(self.clone()); // a thread-read safe reusable copy of self
 
+        // create all the runnable chunks
         let step = ((range_end - range_start) / chunks) + if (range_end - range_start) % chunks == 0 { 0 } else { 1 }; 
         let mut i: u64 = 0;
 
@@ -156,8 +155,9 @@ impl Block {
 
 // NOTE: this is the preemptive version
 pub fn main(_args: Vec<String>) -> isize {
-    logger::set_log_level(Level::Error);
     
+    logger::set_log_level(Level::Error);
+
     let mut block_1 = Block::first_block();
     let _success_1 = block_1.mine(4);
     
@@ -169,6 +169,7 @@ pub fn main(_args: Vec<String>) -> isize {
 
     println!("created a chain of 3 blocks!\nproofs:\t{:?}\t{:?}\t{:?}", block_1.proof, block_2.proof, block_3.proof);
 
+    logger::set_log_level(Level::Trace);
+
     0
 }
-

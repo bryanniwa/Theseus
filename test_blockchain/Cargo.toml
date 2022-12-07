@@ -1,0 +1,49 @@
+[package]
+name = "test_blockchain"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies.terminal_print]
+path = "../../kernel/terminal_print"
+
+[dependencies.spawn]
+path = "../../kernel/spawn"
+
+[dependencies.task]
+path = "../../kernel/task"
+
+#[dependencies.hpet]
+#path = "../../kernel/acpi/hpet"
+
+#[dependencies.smoltcp_helper]
+#path = "../../kernel/smoltcp_helper"
+
+#[dependencies.sleep]
+#path = "../../kernel/sleep"
+
+[dependencies.task_async]
+path = "../../kernel/task_async"
+
+#[dependencies.timer_future]
+#path = "../../kernel/timer_future"
+
+[dependencies.simple_executor]
+path = "../../kernel/simple_executor"
+
+[dependencies.log]
+version = "0.4.8"
+
+[dependencies.logger]
+path = "../../kernel/logger"
+
+[dependencies.sha3]
+version = "~0.9"
+default-features = false
+#features = ["alloc"]
+
+[dependencies.digest]
+version = "~0.9"
+default-features = false
+features = ["alloc"]
+
+
