@@ -2951,10 +2951,7 @@ dependencies = [
 name = "simple_executor"
 version = "0.1.0"
 dependencies = [
- "crossbeam-queue",
  "task_async",
- "terminal_print",
- "x86_64",
 ]
 
 [[package]]
@@ -3393,12 +3390,12 @@ name = "test_multitask"
 version = "0.1.0"
 dependencies = [
  "hpet",
- "simple_executor",
  "sleep",
  "smoltcp_helper",
  "task_async",
  "terminal_print",
  "timer_future",
+ "waker_executor",
 ]
 
 [[package]]
@@ -3894,6 +3891,16 @@ dependencies = [
  "log",
  "scheduler",
  "task",
+]
+
+[[package]]
+name = "waker_executor"
+version = "0.1.0"
+dependencies = [
+ "crossbeam-queue",
+ "task_async",
+ "terminal_print",
+ "x86_64",
 ]
 
 [[package]]

@@ -1,0 +1,22 @@
+[package]
+authors = ["Bryan Niwa <thebryanniwa@gmail.com>"]
+name = "waker_executor"
+description = "An executor for async tasks that supports wakers"
+version = "0.1.0"
+
+[dependencies]
+x86_64 = "0.14.8"
+
+[dependencies.crossbeam-queue]
+version = "0.3.8"
+default-features = false
+features = ["alloc"]
+
+[dependencies.task_async]
+path = "../task_async"
+
+[dependencies.terminal_print]
+path = "../../kernel/terminal_print"
+
+[lib]
+crate-type = ["rlib"]

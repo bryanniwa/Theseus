@@ -21,5 +21,5 @@ path = "../../kernel/task_async"
 [dependencies.timer_future]
 path = "../../kernel/timer_future"
 
-[dependencies.simple_executor]
-path = "../../kernel/simple_executor"
+[dependencies.waker_executor]
+path = "../../kernel/waker_executor"
