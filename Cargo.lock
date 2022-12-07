@@ -524,6 +524,8 @@ name = "count"
 version = "0.1.0"
 dependencies = [
  "hpet",
+ "log",
+ "logger",
  "smoltcp_helper",
  "terminal_print",
 ]
@@ -3998,6 +4000,9 @@ name = "waker_executor"
 version = "0.1.0"
 dependencies = [
  "crossbeam-queue",
+ "spawn",
+ "spin 0.9.0",
+ "task",
  "task_async",
  "terminal_print",
  "x86_64",
