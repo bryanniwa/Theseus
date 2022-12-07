@@ -42,10 +42,10 @@ impl WakerExecutor {
 
     pub fn run(&mut self) -> Result<(), ()> {
         loop {
+            self.run_ready_tasks();
             if self.tasks.is_empty() {
                 return Ok(());
             }
-            self.run_ready_tasks();
             self.sleep_if_idle();
         }
     }
