@@ -49,3 +49,39 @@ fn dummy_raw_waker() -> RawWaker {
     #[allow(clippy::zero_ptr)]
     RawWaker::new(0 as *const (), vtable)
 }
+
+// TODO: make this function accept any iterator
+fn join_all<T>(futures: Vec<T>) -> JoinAll<T>
+where
+    T: Future,
+{
+    JoinAll { futures }
+}
+
+struct JoinAll<T> {
+    pub futures: Option<Vec<T>>
+}
+
+/*
+impl JoinAll<T> {
+    
+}
+*/
+
+// now join_all can be awaited
+impl Future for JoinAll<T> {
+    type Output = Vec<T::Output>;
+    pub fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
+        match futures {
+            Some(futures) => {
+                // do initial poll for all futures & give them their own threads
+            },
+            None => {
+                // check if all children are done or have maybe failed
+                // deadlocks possible here
+
+                // NOTE: do not join
+            },
+        }
+    }
+}
